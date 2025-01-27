@@ -8,6 +8,7 @@ export class Game {
     steps: Step[];
     state: number[][];
     lastMoveResultIn: string;
+    updatedAt: number;
 
     constructor(id: string, boardId: number, state: number[][]) {
         this.id = id;
@@ -20,8 +21,9 @@ export class Game {
             id: this.id,
             boardId: this.boardId,
             state: this.state,
-            lastMoveResultIn: this.lastMoveResultIn
-        })
+            lastMoveResultIn: this.lastMoveResultIn,
+            updatedAt: this.updatedAt
+        });
     }
 
     withMoveOutCome(moc: MoveOutCome): Game {

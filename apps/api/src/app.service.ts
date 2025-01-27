@@ -64,7 +64,9 @@ export class AppService {
     }
     
     game.state = newState;
+    game.updatedAt = new Date().getTime();
     await this.redis.set(gameId, game.stringify());
+
 
     await firstValueFrom(this.kafka.emit('car-moved', game.stringify()));
 
