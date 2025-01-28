@@ -9,7 +9,7 @@ services:
       - "9092:9092"
       - "9101:9101"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker:29092,PLAINTEXT_HOST://host.docker.internal:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@broker:29093'
       KAFKA_LISTENERS: 'PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092'
 
@@ -25,13 +25,20 @@ services:
 
   db:
     image: postgres
-    container_name: rush_hour
+    container_name: rush_hour_db
     ports:
       - "5434:5432"
     environment:
       POSTGRES_DB: rush_hour
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
+
+  redis:
+    image: redis
+    hostname: rush_hour_redis
+    container_name: rush_hour_redis
+    ports:
+      - "6379:6379"
 
   api:
     build:
@@ -41,6 +48,15 @@ services:
       - "3000:3000"
     environment:
       DATABASE_URL: "postgresql://root:root@host.docker.internal:5434/rush_hour?schema=public"
-      KAFKA_BROKER: "host.docker.internal:9092"
-      REDIS_HOST: "host.docker.internal"
+      KAFKA_BROKER: broker:29092
+      REDIS_HOST: rush_hour_redis
+      REDIS_PORT: 6379
+
+  consumer:
+    build:
+      context: apps/consumer
+    container_name: consumer
+    environment:
+      KAFKA_BROKER: broker:29092
+      REDIS_HOST: rush_hour_redis
       REDIS_PORT: 6379
