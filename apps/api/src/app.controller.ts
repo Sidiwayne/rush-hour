@@ -24,7 +24,7 @@ export class AppController {
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: 'board created'
+    description: 'create board (red = 1)'
   })
   createBoard(@Body() board: Board) {
     return this.appService.createBoard(board);

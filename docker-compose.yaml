@@ -60,6 +60,12 @@ services:
     ports:
       - "6379:6379"
 
+  redisinsight:
+    image: redis/redisinsight
+    container_name: rush_hour_redisinsight
+    ports:
+      - "5540:5540"
+
   api:
     build:
       context: apps/api

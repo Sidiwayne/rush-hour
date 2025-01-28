@@ -20,7 +20,8 @@ The project consists of three main microservices:
 - **Message Queue**: Kafka
 - **Database**: PostgreSQL
 - **Cache**: Redis
-- **Monitoring**: [Provectus Kafka UI](https://github.com/provectus/kafka-ui) for visualizing Kafka topics and messages.
+- **Monitoring Kafka**: [Provectus Kafka UI](https://github.com/provectus/kafka-ui) for visualizing Kafka topics and messages.
+- **Monitoring Redis**: [Redis Insight](https://github.com/RedisInsight/RedisInsight) for visualizing Kafka topics and messages.
 - **Containerization**: Docker
 
 ## Endpoints
@@ -42,6 +43,7 @@ The project consists of three main microservices:
    - API: `http://localhost:3000`
    - Swagger/OpenAPI: `http://localhost:3000/docs`
    - Kafka UI: `http://localhost:9999`
+   - Redis Insight: `http://localhost:5540`
    - Postgres: Exposed on port `5434`
    - Redis: Exposed on port `6379`
 
