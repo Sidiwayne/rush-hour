@@ -13,9 +13,23 @@ services:
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@broker:29093'
       KAFKA_LISTENERS: 'PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092'
 
+  init-kafka:
+    image: confluentinc/confluent-local:7.4.1
+    depends_on:
+      - broker
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      kafka-topics --bootstrap-server broker:29092 --list
+      echo -e 'Creating kafka topic: car-moved'
+      kafka-topics --bootstrap-server broker:29092 --create --if-not-exists --topic car-moved --replication-factor 1 --partitions 1
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server broker:29092 --list
+      "
+
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
-    container_name: kafka-ui
+    container_name: rush_hour_kafka-ui
     ports:
       - 9999:8080
     environment:
@@ -25,6 +39,7 @@ services:
 
   db:
     image: postgres
+    hostname: rush_hour_db
     container_name: rush_hour_db
     ports:
       - "5434:5432"
@@ -32,6 +47,11 @@ services:
       POSTGRES_DB: rush_hour
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "rush_hour", "-U", "root"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   redis:
     image: redis
@@ -43,20 +63,33 @@ services:
   api:
     build:
       context: apps/api
-    container_name: api
+    container_name: rush_hour_api
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: "postgresql://root:root@host.docker.internal:5434/rush_hour?schema=public"
+      DATABASE_URL: "postgresql://root:root@rush_hour_db:5432/rush_hour?schema=public"
       KAFKA_BROKER: broker:29092
       REDIS_HOST: rush_hour_redis
       REDIS_PORT: 6379
+    depends_on:
+      db:
+        condition: service_healthy
 
   consumer:
     build:
       context: apps/consumer
-    container_name: consumer
+    container_name: rush_hour_consumer
     environment:
       KAFKA_BROKER: broker:29092
       REDIS_HOST: rush_hour_redis
       REDIS_PORT: 6379
+    depends_on:
+      - init-kafka
+  cleaner:
+    build:
+      context: apps/cleaner
+    container_name: rush_hour_cleaner
+    environment:
+      REDIS_HOST: rush_hour_redis
+      REDIS_PORT: 6379
+      ITEM_MAX_AGE: 1 # test (should be 5 minutes)

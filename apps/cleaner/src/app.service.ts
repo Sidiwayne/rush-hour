@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { RedisService } from './storage/redis.service';
 import { Game } from './interfaces';
-import { isDatePassedBy5Minutes } from './helper';
+import { isDatePassed } from './helper';
 
 @Injectable()
 export class AppService {
@@ -10,7 +10,7 @@ export class AppService {
   constructor(private redis: RedisService){}
 
   getKeysToDelete(item: Game): string[] {
-    if(isDatePassedBy5Minutes(item.updatedAt)) {
+    if(isDatePassed(item.updatedAt)) {
       return [item.id, `move-outcome:${item.id}`];
     }
     return [];

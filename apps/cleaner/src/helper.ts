@@ -1,7 +1,8 @@
-export const isDatePassedBy5Minutes = (timestamp: number) => {
+export const isDatePassed = (timestamp: number) => {
     const currentTime = new Date();
     const targetDate = new Date(timestamp);
   
     const diff = currentTime.getTime() - targetDate.getTime();
-    return diff >=  5 * 60 * 1000;
+    const minutes = process.env.ITEM_MAX_AGE && parseInt(process.env.ITEM_MAX_AGE) || 5;
+    return diff >=  minutes * 60 * 1000;
   }
