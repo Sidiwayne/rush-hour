@@ -1,13 +1,26 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Car, MovementDirection, MoveOutCome, Step } from "../interfaces";
 
 
 
 export class Game {
+    @ApiProperty()
     id: string;
+    @ApiProperty()
     boardId: number;
-    steps: Step[];
+    @ApiProperty({
+        type: 'array',
+        items: {
+            type: 'array',
+            items: {
+                type: 'number',
+            },
+        },
+    })
     state: number[][];
+    @ApiProperty()
     lastMoveResultIn: string;
+    @ApiProperty()
     updatedAt: number;
 
     constructor(id: string, boardId: number, state: number[][]) {

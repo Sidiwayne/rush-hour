@@ -1,3 +1,5 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export enum MovementDirection {
     Up,
     Right,
@@ -13,10 +15,13 @@ export interface Car {
     orientation: 'horizontal' | 'vertical';
 }
 
-export interface Step {
-    carId: number;
-    direction: MovementDirection;
-}
+
+export class Step  {
+    @ApiProperty()
+    carId: number ;
+    @ApiProperty()
+    direction: MovementDirection
+};
 
 export interface MoveOutCome {
     currentMoveMinStep: number;
