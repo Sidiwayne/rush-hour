@@ -1,5 +1,5 @@
 import { MovementDirection } from "../interfaces";
-import { Game } from "./Game";
+import { Game } from "./game";
 
 const initState: number[][] = Array.from({ length: 6 }, (_, index) =>  Array.from({ length: 6 }, (_, index) => 0));
 

@@ -1,7 +1,7 @@
 import { NotFoundException } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { RepoService } from "./storage/repo.service";
-import { Game } from "./models/Game";
+import { Game } from "./models/game";
 import { of } from "rxjs";
 
 const redisMock = jest.fn().mockImplementation(() => ({
