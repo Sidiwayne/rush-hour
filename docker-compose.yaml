@@ -90,6 +90,7 @@ services:
       REDIS_HOST: rush_hour_redis
       REDIS_PORT: 6379
     depends_on:
+      - broker
       - init-kafka
   cleaner:
     build:

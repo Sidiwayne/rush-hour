@@ -1,4 +1,4 @@
-# Rush Hour Puzzle API
+# Rush Hour Puzzle
 
 ## Overview
 Rush Hour is a puzzle-solving platform where players move cars on a 6x6 board to free the red car by moving it to the rightmost edge. This project is built as a **NestJS monorepo** with three microservices and uses **Kafka**, **Postgres**, and **Redis** for processing and storage.
@@ -7,7 +7,6 @@ Rush Hour is a puzzle-solving platform where players move cars on a 6x6 board to
 1. **Create and manage game boards**.
 2. **Track player moves and compute their quality** (Good/Waste/Blunder).
 3. **Automated cleanup of inactive games using cron jobs**.
-4. **Swagger documentation** for easy API exploration.
 
 ## Architecture
 The project consists of three main microservices:
@@ -25,11 +24,11 @@ The project consists of three main microservices:
 - **Containerization**: Docker
 
 ## Endpoints
+- **GET /__internal__/heartbeat**: Health check endpoint.
 - **POST /create-board**: Create a new game board.
 - **POST /start-game/{boardId}**: Start a game for a given board.
 - **GET /game/{gameId}**: Fetch the current state of a game.
 - **PUT /move-car/{gameId}**: Move a car on the board. Determines if the move is good, wasteful, or a blunder.
-- **GET /__internal__/heartbeat**: Health check endpoint.
 - **GET /docs**: Access Swagger API documentation.
 
 ## Usage
