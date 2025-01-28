@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { firstValueFrom } from 'rxjs';
 import { MoveOutCome } from './interfaces/';
 import { Board } from './models/board';
-import { Game } from './models/Game';
+import { Game } from './models/game';
 import { Step } from './interfaces/';
 import { RepoService } from './storage/repo.service';
 import { RedisService } from './storage/redis.service';
