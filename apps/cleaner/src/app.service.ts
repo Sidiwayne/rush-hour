@@ -25,7 +25,7 @@ export class AppService {
         return;
       }
       await this.redis.deleteItems(keysToDelete);
-      console.log(`deleted unactive games (ids): ${keysToDelete}`);
+      console.log(`deleted inactive games (ids): ${keysToDelete}`);
     } catch(e) {
       console.log('cleaned failed with error', e);
     }

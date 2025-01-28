@@ -7,7 +7,7 @@ const mockRedis = jest.fn().mockImplementation(() => ({
 }));
 
 describe('cleanner cron', () => {
-    it('should clean unactive', async () => {
+    it('should clean inactive', async () => {
         const mockedRedis = mockRedis();
         const service = new AppService(mockedRedis);
         const games: Game[] = [
