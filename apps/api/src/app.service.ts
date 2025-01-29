@@ -67,7 +67,6 @@ export class AppService {
     game.updatedAt = new Date().getTime();
     await this.redis.set(gameId, game.stringify());
 
-
     await firstValueFrom(this.kafka.emit('car-moved', game.stringify()));
 
     return false;

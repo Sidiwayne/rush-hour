@@ -169,28 +169,4 @@ export class Game {
         }
         return moves;
     }
-
-    solve(initState: number[][]): number[][] {
-        // implement bfs
-        // explore all possible nodes (node = new grid config)
-        const visited = new Set<string>();
-        const queue = [[initState, []]];
-        visited.add(JSON.stringify(initState));
-
-        while (queue.length > 0) {
-            const [state, step] = queue.shift();
-            if (this.isSolved(state)) {
-                return step;
-            }
-
-            const nextMoves = this.getAllMovesFromState(state);
-            for (const move of nextMoves) {
-                if (!visited.has(JSON.stringify(move))) {
-                    visited.add(JSON.stringify(move));
-                    queue.push([move, [...step, move]]);
-                }
-            }
-        }
-        return;
-    }
 }

@@ -45,7 +45,7 @@ describe('test Game class', ()  => {
             expect(steps).toHaveLength(6);
         });
 
-        it('Use case 3: simple solution', () => {
+        it('Use case 4: a bit harder', () => {
             const state:number[][] = [
                 [2, 2, 2, 0, 0, 3],
                 [0, 0, 4, 0, 0, 3],

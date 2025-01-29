@@ -36,7 +36,7 @@ The project consists of three main microservices:
 1. Ensure **Docker** and **Docker Compose** are installed.
 2. Build and start the containers:
    ```bash
-   docker-compose up --build
+   docker-compose up -d --build
    ```
 3. Access the services:
    - API: `http://localhost:3000`
